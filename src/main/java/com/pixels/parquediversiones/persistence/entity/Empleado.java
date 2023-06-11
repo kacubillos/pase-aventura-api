@@ -23,11 +23,85 @@ public class Empleado {
     @Column(name = "fecha_nacimiento")
     private LocalDateTime fechaNacimiento;
 
+    @Column(name = "id_rol")
+    private Integer idRol;
+
     @ManyToOne
     @JoinColumn(name = "id_rol", insertable = false, updatable = false)
     private Rol rol;
 
-    @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @OneToOne(mappedBy = "empleado")
     private Usuario usuario;
+
+    public Integer getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Integer idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public Integer getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(Integer numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public LocalDateTime getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Integer getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Integer idRol) {
+        this.idRol = idRol;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

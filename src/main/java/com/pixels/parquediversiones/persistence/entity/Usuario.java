@@ -11,6 +11,9 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
+    @Column(name = "id_empleado")
+    private Integer idEmpleado;
+
     @Column(name = "correo_electronico")
     private String correoElectronico;
 
@@ -18,6 +21,7 @@ public class Usuario {
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne
+    @JoinColumn(name = "id_empleado", updatable = false, insertable = false)
     private Empleado empleado;
 }
