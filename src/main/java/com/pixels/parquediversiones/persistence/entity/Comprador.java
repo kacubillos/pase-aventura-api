@@ -4,6 +4,7 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="compradores")
@@ -23,6 +24,12 @@ public class Comprador {
 
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
+
+    @OneToMany(mappedBy = "comprador")
+    private List<Entrada> entradas;
+
+    @OneToMany(mappedBy = "comprador")
+    private List<Venta> ventas;
 
     public Integer getIdComprador() {
         return idComprador;
@@ -62,5 +69,21 @@ public class Comprador {
 
     public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public List<Entrada> getEntradas() {
+        return entradas;
+    }
+
+    public void setEntradas(List<Entrada> entradas) {
+        this.entradas = entradas;
+    }
+
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Venta> ventas) {
+        this.ventas = ventas;
     }
 }
