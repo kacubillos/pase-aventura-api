@@ -10,7 +10,9 @@ public class Employee {
     private String lastname;
     private LocalDateTime birthDate;
     private int roleId;
+    private int gameId;
     private Role role;
+    private Game game;
 
     public int getEmployeeId() {
         return employeeId;
@@ -68,11 +70,27 @@ public class Employee {
         this.roleId = roleId;
     }
 
+    public int getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

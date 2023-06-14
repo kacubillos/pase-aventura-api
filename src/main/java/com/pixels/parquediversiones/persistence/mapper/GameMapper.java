@@ -23,6 +23,9 @@ public interface GameMapper {
     Game toGame(Juego juego);
     List<Game> toGames(List<Juego> juegos);
     @InheritInverseConfiguration
-    @Mapping(target = "horarios", ignore = true)
+    @Mappings({
+            @Mapping(target = "horarios", ignore = true),
+            @Mapping(target = "empleados", ignore = true)
+    })
     Juego toJuego(Game game);
 }

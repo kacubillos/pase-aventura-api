@@ -26,9 +26,16 @@ public class Empleado {
     @Column(name = "id_rol")
     private Integer idRol;
 
+    @Column(name = "id_juego")
+    private Integer idJuego;
+
     @ManyToOne
     @JoinColumn(name = "id_rol", insertable = false, updatable = false)
     private Rol rol;
+
+    @ManyToOne
+    @JoinColumn(name = "id_juego", insertable = false, updatable = false)
+    private Juego juego;
 
     @OneToOne(mappedBy = "empleado")
     private Usuario usuario;
@@ -95,6 +102,22 @@ public class Empleado {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public Integer getIdJuego() {
+        return idJuego;
+    }
+
+    public void setIdJuego(Integer idJuego) {
+        this.idJuego = idJuego;
+    }
+
+    public Juego getJuego() {
+        return juego;
+    }
+
+    public void setJuego(Juego juego) {
+        this.juego = juego;
     }
 
     public Usuario getUsuario() {

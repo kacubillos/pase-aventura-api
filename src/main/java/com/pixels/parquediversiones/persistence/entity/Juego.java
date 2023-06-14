@@ -22,8 +22,8 @@ public class Juego {
     private LocalDateTime fechaRegistro;
     @OneToMany(mappedBy = "juego")
     private List<Horario> horarios;
-    //@OneToMany(mappedBy = "juego")
-    //private List<Empleado> empleados;
+    @OneToMany(mappedBy = "juego")
+    private List<Empleado> empleados;
     //@OneToMany(mappedBy = "juego")
     //private List<Entrada> entradas;
     public List<Horario> getHorarios() {
@@ -80,5 +80,13 @@ public class Juego {
 
     public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public List<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
     }
 }

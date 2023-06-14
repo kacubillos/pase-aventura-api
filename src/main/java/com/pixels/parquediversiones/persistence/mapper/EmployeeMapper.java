@@ -9,7 +9,7 @@ import org.mapstruct.Mappings;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = { RoleMapper.class })
+@Mapper(componentModel = "spring", uses = { RoleMapper.class, GameMapper.class })
 public interface EmployeeMapper {
     @Mappings({
             @Mapping(source = "idEmpleado", target = "employeeId"),
@@ -19,12 +19,16 @@ public interface EmployeeMapper {
             @Mapping(source = "apellidos", target = "lastname"),
             @Mapping(source = "fechaNacimiento", target = "birthDate"),
             @Mapping(source = "idRol", target = "roleId"),
+            @Mapping(source = "idJuego", target = "gameId"),
             @Mapping(source = "rol", target = "role"),
+            @Mapping(source = "juego", target = "game")
     })
     Employee toEmployee(Empleado empleado);
     List<Employee> toEmployees(List<Empleado> empleados);
 
     @InheritInverseConfiguration
-    @Mapping(target = "usuario", ignore = true)
+    @Mappings({
+            @Mapping(target = "usuario", ignore = true)
+    })
     Empleado toEmpleado(Employee employee);
 }
