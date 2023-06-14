@@ -23,5 +23,9 @@ public interface CustomerMapper {
     List<Customer> toCustomers(List<Comprador> compradores);
 
     @InheritInverseConfiguration
+    @Mappings({
+            @Mapping(target = "entradas", ignore = true),
+            @Mapping(target = "ventas", ignore = true)
+    })
     Comprador toComprador(Customer customer);
 }

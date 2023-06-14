@@ -25,7 +25,8 @@ public interface GameMapper {
     @InheritInverseConfiguration
     @Mappings({
             @Mapping(target = "horarios", ignore = true),
-            @Mapping(target = "empleados", ignore = true)
+            @Mapping(target = "empleados", ignore = true),
+            @Mapping(target = "entradas", ignore = true)
     })
     Juego toJuego(Game game);
 }

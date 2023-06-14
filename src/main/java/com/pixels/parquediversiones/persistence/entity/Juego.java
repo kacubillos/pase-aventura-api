@@ -24,8 +24,8 @@ public class Juego {
     private List<Horario> horarios;
     @OneToMany(mappedBy = "juego")
     private List<Empleado> empleados;
-    //@OneToMany(mappedBy = "juego")
-    //private List<Entrada> entradas;
+    @OneToMany(mappedBy = "juego")
+    private List<Entrada> entradas;
     public List<Horario> getHorarios() {
         return horarios;
     }
@@ -88,5 +88,13 @@ public class Juego {
 
     public void setEmpleados(List<Empleado> empleados) {
         this.empleados = empleados;
+    }
+
+    public List<Entrada> getEntradas() {
+        return entradas;
+    }
+
+    public void setEntradas(List<Entrada> entradas) {
+        this.entradas = entradas;
     }
 }

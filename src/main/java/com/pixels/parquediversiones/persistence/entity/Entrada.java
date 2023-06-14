@@ -36,6 +36,10 @@ public class Entrada {
     @JoinColumn(name = "id_venta", insertable = false, updatable = false)
     private Venta venta;
 
+    @ManyToOne
+    @JoinColumn(name = "id_juego", insertable = false, updatable = false)
+    private Juego juego;
+
     public Integer getIdEntrada() {
         return idEntrada;
     }
@@ -106,5 +110,13 @@ public class Entrada {
 
     public void setVenta(Venta venta) {
         this.venta = venta;
+    }
+
+    public Juego getJuego() {
+        return juego;
+    }
+
+    public void setJuego(Juego juego) {
+        this.juego = juego;
     }
 }

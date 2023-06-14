@@ -12,6 +12,7 @@ import java.util.Optional;
 public class GameService {
     @Autowired
     private GameRepository gameRepository;
+
     public List<Game> getAll(){
         return gameRepository.getAll();
     }
