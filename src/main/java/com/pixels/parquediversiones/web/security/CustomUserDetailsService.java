@@ -1,5 +1,7 @@
 package com.pixels.parquediversiones.web.security;
 
+import com.pixels.parquediversiones.domain.Role;
+import com.pixels.parquediversiones.domain.UserAccount;
 import com.pixels.parquediversiones.persistence.UsuarioRepository;
 import com.pixels.parquediversiones.persistence.entity.Rol;
 import com.pixels.parquediversiones.persistence.entity.Usuario;
@@ -27,14 +29,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Collection<GrantedAuthority> mapToAuthorities(List<Rol> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getNombre())).collect(Collectors.toList());
+    public Collection<GrantedAuthority> mapToAuthorities(List<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByEmail(email)
+        UserAccount userAccount = usuarioRepository.getByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with this email: " + email));
-        return new User(usuario.getCorreoElectronico(), usuario.getClave(), mapToAuthorities(Collections.singletonList(usuario.getEmpleado().getRol())));
+        return new User(userAccount.getEmail(), userAccount.getPassword(), mapToAuthorities(Collections.singletonList(userAccount.getEmployee().getRole())));
     }
 }

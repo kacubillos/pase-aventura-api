@@ -2,6 +2,7 @@ package com.pixels.parquediversiones.web.controller;
 
 import com.pixels.parquediversiones.domain.dto.AuthenticationRequest;
 import com.pixels.parquediversiones.domain.dto.AuthenticationResponse;
+import com.pixels.parquediversiones.domain.service.UserService;
 import com.pixels.parquediversiones.persistence.UsuarioRepository;
 import com.pixels.parquediversiones.persistence.entity.Usuario;
 import com.pixels.parquediversiones.web.security.JWTUtil;
@@ -28,7 +29,6 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserService userService;
 
-    
 }
