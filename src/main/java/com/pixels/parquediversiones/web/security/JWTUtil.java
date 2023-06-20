@@ -4,8 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Component;
@@ -17,6 +15,7 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
+    // Extract values from application.properties file
     @Value("${security.jwt.secret}")
     private String key;
 
@@ -43,7 +42,7 @@ public class JWTUtil {
 
         //  set the JWT Claims
         JwtBuilder builder = Jwts.builder().setIssuedAt(now).setSubject(email)
-                                .signWith(signatureAlgorithm, signingKey);
+                                .signWith(signingKey, signatureAlgorithm);
 
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
@@ -64,8 +63,8 @@ public class JWTUtil {
     public String getEmail(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
-                            .parseClaimsJws(jwt).getBody();
+        Claims claims = Jwts.parserBuilder().setSigningKey(DatatypeConverter.parseBase64Binary(key))
+                .build().parseClaimsJws(jwt).getBody();
 
         return claims.getSubject();
     }
@@ -78,7 +77,8 @@ public class JWTUtil {
      */
     public boolean validate(String jwt) {
         try {
-            Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key)).parseClaimsJws(jwt);
+            Jwts.parserBuilder().setSigningKey(DatatypeConverter.parseBase64Binary(key))
+                    .build().parseClaimsJws(jwt);
             return true;
         } catch (Exception e) {
             throw new AuthenticationCredentialsNotFoundException("Jwt expired");
