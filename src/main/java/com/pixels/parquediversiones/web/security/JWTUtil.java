@@ -78,7 +78,7 @@ public class JWTUtil {
      */
     public boolean validate(String jwt) {
         try {
-            Jwts.parser().setSigningKey(key).parseClaimsJws(jwt);
+            Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key)).parseClaimsJws(jwt);
             return true;
         } catch (Exception e) {
             throw new AuthenticationCredentialsNotFoundException("Jwt expired");

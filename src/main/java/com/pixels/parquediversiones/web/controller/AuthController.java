@@ -1,10 +1,10 @@
 package com.pixels.parquediversiones.web.controller;
 
+import com.pixels.parquediversiones.domain.UserAccount;
 import com.pixels.parquediversiones.domain.dto.AuthenticationRequest;
 import com.pixels.parquediversiones.domain.dto.AuthenticationResponse;
+import com.pixels.parquediversiones.domain.service.EmployeeService;
 import com.pixels.parquediversiones.domain.service.UserService;
-import com.pixels.parquediversiones.persistence.UsuarioRepository;
-import com.pixels.parquediversiones.persistence.entity.Usuario;
 import com.pixels.parquediversiones.web.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,5 +30,31 @@ public class AuthController {
     private JWTUtil jwtUtil;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmployeeService employeeService;
 
+    @PostMapping("/register")
+    public ResponseEntity<UserAccount> createUser(@RequestBody UserAccount userAccount) {
+        int empId = userAccount.getEmployeeId();
+        String email = userAccount.getEmail();
+
+        if(employeeService.getById(empId).isPresent() && !userService.existsUser(email)) {
+            userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+            return new ResponseEntity<>(userService.save(userAccount), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest authenticationRequest) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                authenticationRequest.getEmail(),
+                authenticationRequest.getPassword()
+        ));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtUtil.create(authenticationRequest.getEmail());
+
+        return new ResponseEntity<>(new AuthenticationResponse(token), HttpStatus.OK);
+    }
 }
