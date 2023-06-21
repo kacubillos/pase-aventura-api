@@ -36,7 +36,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<UserAccount> createUser(@RequestBody UserAccount userAccount) {
         int empId = userAccount.getEmployeeId();
-        String email = userAccount.getEmail();
+        String email = userAccount.getEmail().toLowerCase();
 
         if(employeeService.getById(empId).isPresent() && !userService.existsUser(email)) {
             userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));

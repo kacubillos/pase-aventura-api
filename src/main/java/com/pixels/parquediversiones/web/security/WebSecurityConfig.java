@@ -20,16 +20,32 @@ public class WebSecurityConfig {
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    /**
+     * Bean to verify user information when logging
+     * @param authenticationConfiguration
+     * @return
+     * @throws Exception
+     */
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    /**
+     * Bean contain the custom filter for authentication
+     * @return
+     */
     @Bean
     JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
     }
 
+    /**
+     * Bean define the filter chain and permissions for each role
+     * @param http
+     * @return
+     * @throws Exception
+     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
@@ -41,6 +57,8 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/docs/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .antMatchers("/employees/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
@@ -49,6 +67,10 @@ public class WebSecurityConfig {
                 .build();
     }
 
+    /**
+     * Bean to encrypt passwords
+     * @return
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

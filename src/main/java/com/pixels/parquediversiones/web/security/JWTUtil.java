@@ -15,10 +15,15 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
-    // Extract values from application.properties file
+    /**
+     * Secret key to sign the tokens
+     */
     @Value("${security.jwt.secret}")
     private String key;
 
+    /**
+     * Expiration time in milliseconds
+     */
     @Value("${security.jwt.ttlMillis}")
     private long ttlMillis;
 
@@ -55,7 +60,7 @@ public class JWTUtil {
     }
 
     /**
-     * Method to validate and read the JWT
+     * Method to validate and read email from the JWT
      *
      * @param jwt
      * @return
@@ -70,7 +75,7 @@ public class JWTUtil {
     }
 
     /**
-     * Method to validate and read the JWT
+     * Method to validate the JWT
      *
      * @param jwt
      * @return
