@@ -12,6 +12,8 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JWTUtil {
@@ -33,7 +35,7 @@ public class JWTUtil {
      * @param email
      * @return
      */
-    public String create(String email) {
+    public String create(String email, String role) {
 
         // The JWT signature algorithm used to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -45,8 +47,11 @@ public class JWTUtil {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(key);
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
+
         //  set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setIssuedAt(now).setSubject(email)
+        JwtBuilder builder = Jwts.builder().setIssuedAt(now).setSubject(email).addClaims(claims)
                                 .signWith(signingKey, signatureAlgorithm);
 
         if (ttlMillis >= 0) {
