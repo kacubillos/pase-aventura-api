@@ -10,7 +10,7 @@ public class Employee {
     private String lastname;
     private LocalDateTime birthDate;
     private int roleId;
-    private int gameId;
+    private Integer gameId;
     private Role role;
     private Game game;
 
@@ -70,11 +70,11 @@ public class Employee {
         this.roleId = roleId;
     }
 
-    public int getGameId() {
+    public Integer getGameId() {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
+    public void setGameId(Integer gameId) {
         this.gameId = gameId;
     }
 
