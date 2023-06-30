@@ -37,7 +37,7 @@ public class Empleado {
     @JoinColumn(name = "id_juego", insertable = false, updatable = false)
     private Juego juego;
 
-    @OneToOne(mappedBy = "empleado")
+    @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL, orphanRemoval = true)
     private Usuario usuario;
 
     public Integer getIdEmpleado() {
