@@ -1,6 +1,8 @@
 package com.pixels.parquediversiones.web.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,21 +54,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = getToken(request);
-        if(StringUtils.hasText(token) && jwtGenerator.validate(token)) {
-            String username = jwtGenerator.getEmail(token);
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-            List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        try {
+            String token = getToken(request);
+            if(StringUtils.hasText(token) && jwtGenerator.validate(token)) {
+                String username = jwtGenerator.getEmail(token);
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
-            // Check the value of roles
-            if(roles.contains("ADMIN") || roles.contains("EMP_JUEGO")) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                // Set other user authentication information, as IP or user agent
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                // Check the value of roles
+                if(roles.contains("ADMIN") || roles.contains("EMP_JUEGO")) {
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    // Set other user authentication information, as IP or user agent
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // Add authentication object to security context
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    // Add authentication object to security context
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
             }
+        } catch (ExpiredJwtException ex) {
+            logger.info("Token expired!");
+
+        } catch (Exception e) {
+            logger.info("Invalid Token received!");
         }
         // Makes the request to the next filter in the chain
         filterChain.doFilter(request, response);
