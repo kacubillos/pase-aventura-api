@@ -4,13 +4,14 @@ import com.pixels.parquediversiones.persistence.entity.Horario;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Game {
     private Integer gameId;
     private String name;
     private Integer capacityPersons;
-    private Time duration;
+    private LocalTime duration;
     private Double salesPrice;
     private LocalDateTime registrationDate;
 
@@ -38,11 +39,11 @@ public class Game {
         this.capacityPersons = capacityPersons;
     }
 
-    public Time getDuration() {
+    public LocalTime getDuration() {
         return duration;
     }
 
-    public void setDuration(Time duration) {
+    public void setDuration(LocalTime duration) {
         this.duration = duration;
     }
 
