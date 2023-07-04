@@ -31,6 +31,11 @@ public class EmpleadoRepository implements EmployeeRepository {
     }
 
     @Override
+    public Optional<Employee> getByDocumentNum(int documentNum) {
+        return empleadoCrudRepository.findByNumeroDocumento(documentNum).map(empleado -> mapper.toEmployee(empleado));
+    }
+
+    @Override
     public Optional<Employee> getEmployee(int employeeId) {
         return empleadoCrudRepository.findById(employeeId).map(empleado -> mapper.toEmployee(empleado));
     }

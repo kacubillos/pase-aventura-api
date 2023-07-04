@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface EmployeeRepository {
     List<Employee> getAll();
     Optional<List<Employee>> getByRole(int roleId);
+    Optional<Employee> getByDocumentNum(int documentNum);
     Optional<Employee> getEmployee(int employeeId);
     Employee save(Employee employee);
     void delete(int employeeId);
