@@ -30,6 +30,8 @@ public class Schedule {
         return endTime;
     }
 
+
+
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }

@@ -34,6 +34,13 @@ public class TicketController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/sale/{id}")
+    public ResponseEntity<List<Ticket>> getBySale(@PathVariable("id") int saleId) {
+        return ticketService.getBySale(saleId)
+                .map(tickets -> new ResponseEntity<>(tickets, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @PostMapping
     public ResponseEntity<Ticket> save(@RequestBody Ticket ticket) {
         return new ResponseEntity<>(ticketService.save(ticket), HttpStatus.CREATED);

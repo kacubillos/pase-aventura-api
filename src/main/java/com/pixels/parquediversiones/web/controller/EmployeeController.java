@@ -36,7 +36,10 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<Employee> save(@RequestBody Employee employee) {
-        return new ResponseEntity<>(employeeService.save(employee), HttpStatus.CREATED);
+        if(employeeService.getByDocumentNum(employee.getDocumentNum()).isEmpty())
+            return new ResponseEntity<>(employeeService.save(employee), HttpStatus.CREATED);
+        else
+            return new ResponseEntity<Employee>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping

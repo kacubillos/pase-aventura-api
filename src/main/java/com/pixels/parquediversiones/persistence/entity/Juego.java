@@ -3,6 +3,7 @@ package com.pixels.parquediversiones.persistence.entity;
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Table(name = "juegos")
@@ -15,7 +16,7 @@ public class Juego {
     private String nombre;
     @Column(name = "capacidad_personas")
     private Integer capacidadPersonas;
-    private Time duracion;
+    private LocalTime duracion;
     @Column(name = "precio_entrada")
     private Double precioVenta;
     @Column(name = "fecha_registro")
@@ -58,11 +59,11 @@ public class Juego {
         this.capacidadPersonas = capacidadPersonas;
     }
 
-    public Time getDuracion() {
+    public LocalTime getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(Time duracion) {
+    public void setDuracion(LocalTime duracion) {
         this.duracion = duracion;
     }
 

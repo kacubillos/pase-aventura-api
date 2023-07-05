@@ -21,6 +21,10 @@ public class EmployeeService {
         return employeeRepository.getEmployee(employeeId);
     }
 
+    public Optional<Employee> getByDocumentNum(int documentNum) {
+        return employeeRepository.getByDocumentNum(documentNum);
+    }
+
     public Optional<List<Employee>> getByRole(int roleId) {
         return employeeRepository.getByRole(roleId);
     }
