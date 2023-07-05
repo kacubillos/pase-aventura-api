@@ -1,6 +1,7 @@
 package com.pixels.parquediversiones.persistence;
 
 import com.pixels.parquediversiones.domain.Ticket;
+import com.pixels.parquediversiones.domain.dto.GameTicketsResponse;
 import com.pixels.parquediversiones.domain.repository.TicketRepository;
 import com.pixels.parquediversiones.persistence.crud.EntradaCrudRepository;
 import com.pixels.parquediversiones.persistence.entity.Entrada;
@@ -8,6 +9,7 @@ import com.pixels.parquediversiones.persistence.mapper.TicketMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +46,20 @@ public class EntradaRepository implements TicketRepository {
     @Override
     public void delete(int ticketId) {
         entradaCrudRepository.deleteById(ticketId);
+    }
+
+    @Override
+    public Optional<List<GameTicketsResponse>> getTicketsSoldByDate(LocalDateTime date) {
+        return entradaCrudRepository.findTicketsSoldByDate(date);
+    }
+
+    @Override
+    public Optional<GameTicketsResponse> getTicketsSoldByDateAndGame(LocalDateTime date, int gameId) {
+        return entradaCrudRepository.findTicketsSoldByDateAndGame(date, gameId);
+    }
+
+    @Override
+    public Optional<List<GameTicketsResponse>> getTicketsSold() {
+        return entradaCrudRepository.findGamesWithMostTickets();
     }
 }

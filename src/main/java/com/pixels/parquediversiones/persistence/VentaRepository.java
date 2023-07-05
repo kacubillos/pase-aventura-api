@@ -1,6 +1,8 @@
 package com.pixels.parquediversiones.persistence;
 
 import com.pixels.parquediversiones.domain.Sale;
+import com.pixels.parquediversiones.domain.dto.CustomerTicketsResponse;
+import com.pixels.parquediversiones.domain.dto.TotalSalesResponse;
 import com.pixels.parquediversiones.domain.repository.SaleRepository;
 import com.pixels.parquediversiones.persistence.crud.VentaCrudRepository;
 import com.pixels.parquediversiones.persistence.entity.Venta;
@@ -44,5 +46,30 @@ public class VentaRepository implements SaleRepository {
     @Override
     public void delete(int saleId) {
         ventaCrudRepository.deleteById(saleId);
+    }
+
+    @Override
+    public Optional<TotalSalesResponse> getTotalSalesByYear(Integer year) {
+        return ventaCrudRepository.getTotalSalesByYear(year);
+    }
+
+    @Override
+    public Optional<TotalSalesResponse> getTotalSalesByMonth(Integer year, Integer month) {
+        return ventaCrudRepository.getTotalSalesByMonth(year, month);
+    }
+
+    @Override
+    public Optional<TotalSalesResponse> getTotalSalesByDay(Integer year, Integer month, Integer day) {
+        return ventaCrudRepository.getTotalSalesByDay(year, month, day);
+    }
+
+    @Override
+    public Optional<List<CustomerTicketsResponse>> getTicketCustomerByYear(Integer year) {
+        return ventaCrudRepository.getTotalTicketsCustomerByYear(year);
+    }
+
+    @Override
+    public Optional<List<CustomerTicketsResponse>> getTicketCustomerByMonth(Integer year, Integer month) {
+        return ventaCrudRepository.getTotalTicketsCustomerByMonth(year, month);
     }
 }
