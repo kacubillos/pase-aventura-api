@@ -14,6 +14,8 @@ import java.util.Optional;
 public interface EntradaCrudRepository extends CrudRepository<Entrada, Integer> {
     Optional<List<Entrada>> findByIdComprador(int idComprador);
 
+    Optional<List<Entrada>> findByIdVenta(int idVenta);
+
     @Query(value = "SELECT new com.pixels.parquediversiones.domain.dto.GameTicketsResponse(j.idJuego, j.nombre, COUNT(e) as entradasVendidas) " +
             "FROM Entrada e " +
             "INNER JOIN e.juego j " +

@@ -33,6 +33,12 @@ public class EntradaRepository implements TicketRepository {
     }
 
     @Override
+    public Optional<List<Ticket>> getBySaleId(int saleId) {
+        Optional<List<Entrada>> entradas = entradaCrudRepository.findByIdVenta(saleId);
+        return entradas.map(ents -> mapper.toTickets(ents));
+    }
+
+    @Override
     public Optional<Ticket> getTicket(int ticketId) {
         return entradaCrudRepository.findById(ticketId).map(entrada -> mapper.toTicket(entrada));
     }

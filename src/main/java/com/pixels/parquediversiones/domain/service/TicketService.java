@@ -28,6 +28,10 @@ public class TicketService {
         return ticketRepository.getByCustomerId(customerId);
     }
 
+    public Optional<List<Ticket>> getBySale(int saleId) {
+        return ticketRepository.getBySaleId(saleId);
+    }
+
     public Ticket save(Ticket ticket) {
         return ticketRepository.save(ticket);
     }
